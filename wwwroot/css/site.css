@@ -1,0 +1,22 @@
+﻿table {
+	font-size: small
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+	padding: 3px
+}
+
+.shadow {
+	position: absolute;
+	width: 100%;
+	box-shadow: 3px 3px 3px darkgrey;
+	z-index: 10;
+}
+
+aside.left-col {
+	float: left;
+}
+
+aside.right-col {
+	float: right;
+}

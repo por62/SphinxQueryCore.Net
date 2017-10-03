@@ -1,0 +1,28 @@
+﻿@using SphinxQueryCore.Net
+
+@model QueryResult
+
+@if (Model != null)
+{
+	<table class="table table-bordered">
+		<tr key="head">
+			@{
+				foreach (var colName in Model.ColumnNames)
+				{
+					<td>@colName</td>
+				}
+			}
+		</tr>
+		@{
+			foreach (var row in Model.Values)
+			{
+				<tr>
+					@foreach (var cellVal in row)
+					{
+						<td>@cellVal</td>
+					}
+				</tr>
+			}
+		}
+	</table>
+}

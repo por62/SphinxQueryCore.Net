@@ -1,0 +1,75 @@
+﻿@{
+	Layout = "_Layout";
+	ViewData["Title"] = "Home Page";
+}
+
+@using SphinxQueryCore.Net
+	@model IndexModel
+
+
+	<div id="main" class="container-fluide">
+		<div class="container-fluide">
+			<div class="row">
+
+				@using (Html.BeginForm())
+			{
+					<div class="col-md-2">
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4>Host</h4>
+							</div>
+							<div class="panel-body">
+								<div class="form-group">
+									@Html.TextBoxFor(m => m.Host, new { @class = "form-control", @placeholder = "host" })
+									@Html.TextBoxFor(m => m.Port, new { @class = "form-control", @placeholder = "port" })
+								</div>
+
+								<div>
+									<div class=@(Model?.Exception != null ? "alert alert-danger" : "hidden") role="alert">
+										<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+										<span class="sr-only">Error:</span>
+										@(" " + Model?.Exception?.Message)
+									</div>
+
+									@Html.Partial("TableControl", Model.Indexes)
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-md-8">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								@Html.TextBoxFor(m => m.Statement, new { @class = "form-control", @placeholder = "enter query statement" })
+								<ul class="hidden"></ul>
+								<input class="hidden" type="submit" value="Отправить" />
+							</div>
+							<div class="panel-body">
+								@Html.Partial("TableControl", Model.Rows)
+							</div>
+						</div>
+					</div>
+			}
+				<div class="col-md-2">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4>Meta</h4>
+						</div>
+						<div class="panel-body">
+							@Html.Partial("TableControl", Model.Meta)
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4>Status</h4>
+						</div>
+						<div class="panel-body">
+							@Html.Partial("TableControl", Model.Status)
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
