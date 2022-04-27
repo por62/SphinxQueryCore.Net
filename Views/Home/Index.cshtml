@@ -12,7 +12,7 @@
 			<div class="row">
 
 				@using (Html.BeginForm())
-			{
+				{
 					<div class="col-md-2">
 
 						<div class="panel panel-default">
@@ -32,7 +32,7 @@
 										@(" " + Model?.Exception?.Message)
 									</div>
 
-									@Html.Partial("TableControl", Model.Indexes)
+									@await Html.PartialAsync("TableControl", Model?.Indexes)
 
 								</div>
 
@@ -47,18 +47,19 @@
 								<input class="hidden" type="submit" value="Отправить" />
 							</div>
 							<div class="panel-body">
-								@Html.Partial("TableControl", Model.Rows)
+								@await Html.PartialAsync("TableControl", Model?.Rows)
 							</div>
 						</div>
 					</div>
-			}
+				}
+
 				<div class="col-md-2">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4>Meta</h4>
 						</div>
 						<div class="panel-body">
-							@Html.Partial("TableControl", Model.Meta)
+							@await Html.PartialAsync("TableControl", Model?.Meta)
 						</div>
 					</div>
 					<div class="panel panel-default">
@@ -66,7 +67,7 @@
 							<h4>Status</h4>
 						</div>
 						<div class="panel-body">
-							@Html.Partial("TableControl", Model.Status)
+							@await Html.PartialAsync("TableControl", Model?.Status)
 						</div>
 					</div>
 				</div>
