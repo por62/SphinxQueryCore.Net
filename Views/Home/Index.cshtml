@@ -6,71 +6,59 @@
 @using SphinxQueryCore.Net
 	@model IndexModel
 
-
 	<div id="main" class="container-fluide">
-		<div class="container-fluide">
-			<div class="row">
+		<div class="row row-col-2 justify-content-center gx-3">
+			<div class="col-2">
+					@if (Model?.Exception != null)
+					{
+						<div class="alert alert-danger" role="alert">
+							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							<span class="sr-only">Error:</span>
+							@(" " + Model?.Exception?.Message)
+						</div>
+					}
 
-				@using (Html.BeginForm())
-				{
-					<div class="col-md-2">
+					@await Html.PartialAsync("TableControl", Model?.Indexes)
 
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4>Host</h4>
-							</div>
-							<div class="panel-body">
-								<div class="form-group">
-									@Html.TextBoxFor(m => m.Host, new { @class = "form-control", @placeholder = "host" })
-									@Html.TextBoxFor(m => m.Port, new { @class = "form-control", @placeholder = "port" })
-								</div>
-
-								<div>
-									<div class=@(Model?.Exception != null ? "alert alert-danger" : "hidden") role="alert">
-										<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-										<span class="sr-only">Error:</span>
-										@(" " + Model?.Exception?.Message)
-									</div>
-
-									@await Html.PartialAsync("TableControl", Model?.Indexes)
-
-								</div>
-
-							</div>
+			</div>
+			<div class="col-9">
+			@using (Html.BeginForm())
+			{
+				<div class="row justify-content-center mb-2">
+					<div class="col">
+						<div class="form-floating">
+							@Html.TextBoxFor(m => m.Host, new { id="floatingHost", @class = "form-control", @placeholder = "host" })
+							<label for="floatingHost">Host</label>
 						</div>
 					</div>
-					<div class="col-md-8">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								@Html.TextBoxFor(m => m.Statement, new { @class = "form-control", @placeholder = "enter query statement" })
-								<ul class="hidden"></ul>
-								<input class="hidden" type="submit" value="Отправить" />
-							</div>
-							<div class="panel-body">
-								@await Html.PartialAsync("TableControl", Model?.Rows)
-							</div>
-						</div>
-					</div>
-				}
-
-				<div class="col-md-2">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4>Meta</h4>
-						</div>
-						<div class="panel-body">
-							@await Html.PartialAsync("TableControl", Model?.Meta)
-						</div>
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4>Status</h4>
-						</div>
-						<div class="panel-body">
-							@await Html.PartialAsync("TableControl", Model?.Status)
+					<div class="col">
+						<div class="form-floating">
+							@Html.TextBoxFor(m => m.Port, new { id="floatingPort", @class = "form-control", @placeholder = "port" })
+							<label for="floatingPort">Port</label>
 						</div>
 					</div>
 				</div>
+				<div class="row justify-content-center">
+					<div class="col">
+						<div class="form-floating mb-2">
+							@Html.TextBoxFor(m => m.Statement, new {id="floatingQuery",  @class = "form-control", @placeholder = "enter query statement" })
+							<label for="floatingQuery">Query text</label>
+							<input hidden type="submit" value="Отправить" />
+						</div>
+					</div>
+				</div>
+			}
+			</div>
+		</div>
+		<div class="row row-col-2 justify-content-center">
+			<div class="col col-md-auto">
+				@await Html.PartialAsync("TableControl", Model?.Rows)
+			</div>
+			<div class="col-3">
+				<div class="mb-2">
+					@await Html.PartialAsync("TableControl", Model?.Meta)
+				</div>
+				@await Html.PartialAsync("TableControl", Model?.Status)
 			</div>
 		</div>
 	</div>
