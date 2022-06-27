@@ -35,7 +35,7 @@ namespace SphinxQueryCore.Net.Controllers
 				connStrBuilder.Port = (uint) prms.Port;
 				connStrBuilder.CharacterSet = "utf8";
 				connStrBuilder.Pooling = false;
-				connStrBuilder.SslMode = MySqlSslMode.None;
+				connStrBuilder.SslMode = MySqlSslMode.Disabled;
 
 				conn = new MySqlConnection(connStrBuilder.ToString());
 
