@@ -4,7 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 namespace SphinxQueryCore.Net
 {
@@ -22,7 +24,6 @@ namespace SphinxQueryCore.Net
 			app.MapHealthChecks("/healthz/ready", new HealthCheckOptions
 			{
 				Predicate = healthCheck => true
-
 			});
 
 			app.MapHealthChecks("/healthz/live", new HealthCheckOptions
@@ -59,7 +60,7 @@ namespace SphinxQueryCore.Net
 						.CreateDefault()
 						.AddService(
 							serviceName: "sphinxquery",
-							serviceVersion: "1.0.1"
+							serviceVersion: "1.0.3"
 						)
 					)
 				);
@@ -69,6 +70,10 @@ namespace SphinxQueryCore.Net
 			builder.Services.AddHealthChecks();
 
 			builder.Services.AddOpenTelemetry()
+				.WithMetrics(cfg => cfg.AddAspNetCoreInstrumentation())
+				.WithTracing(cfg => cfg
+					.AddAspNetCoreInstrumentation()
+					.AddConnectorNet())
 				.UseOtlpExporter();
 
 			return builder;
